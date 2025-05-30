@@ -1,7 +1,7 @@
 import { Button } from "../../components/ui/button";
 import { useWallet } from "@suiet/wallet-kit";
-import { useGoogleLogin } from "@react-oauth/google";
-import { jwtDecode } from "jwt-decode";
+import { CredentialResponse, useGoogleLogin } from "@react-oauth/google";
+import {jwtDecode} from "jwt-decode";
 import {
   jwtToAddress,
   generateNonce,
@@ -32,7 +32,8 @@ export const UserSignIn = (): JSX.Element => {
     scope: "openid email profile",
     onSuccess: async (response) => {
       try {
-        const idToken = response.id_token;
+        const { credential: idToken } = response as CredentialResponse;
+
         if (!idToken) throw new Error("No ID token received");
 
         const decoded: any = jwtDecode(idToken);
@@ -40,12 +41,18 @@ export const UserSignIn = (): JSX.Element => {
         const audience = decoded.aud;
         const subject = decoded.sub;
 
-        const nonce = generateNonce(ephemeralKeyPair.getPublicKey(), maxEpoch, randomness);
+        const nonce = generateNonce(
+          ephemeralKeyPair.getPublicKey(),
+          maxEpoch,
+          randomness
+        );
         const jwt = idToken;
         const zkLoginAddr = jwtToAddress({ issuer, audience, subject, jwt });
         setZkLoginAddress(zkLoginAddr);
 
-        const { createZkLoginSignature, extractPublicInputs } = await import("@mysten/zklogin");
+        const { createZkLoginSignature, extractPublicInputs } = await import(
+          "@mysten/zklogin"
+        );
         const publicInputs = extractPublicInputs({
           jwt,
           maxEpoch,
@@ -61,9 +68,12 @@ export const UserSignIn = (): JSX.Element => {
           jwt,
         });
 
-        const res = await fetch("https://www.googleapis.com/oauth2/v3/userinfo", {
-          headers: { Authorization: `Bearer ${response.access_token}` },
-        });
+        const res = await fetch(
+          "https://www.googleapis.com/oauth2/v3/userinfo",
+          {
+            headers: { Authorization: `Bearer ${response.access_token}` },
+          }
+        );
 
         const userInfo = await res.json();
         const isAdmin = adminEmails.includes(userInfo.email);
@@ -101,7 +111,9 @@ export const UserSignIn = (): JSX.Element => {
     if (connected && wallet?.address) {
       const stored = localStorage.getItem("user");
       if (!stored) {
-        const userRole = adminWallets.includes(wallet.address) ? "admin" : "user";
+        const userRole = adminWallets.includes(wallet.address)
+          ? "admin"
+          : "user";
         const userData = {
           role: userRole,
           address: wallet.address,
@@ -195,7 +207,9 @@ export const UserSignIn = (): JSX.Element => {
             {/* Wallet Address */}
             {connected && wallet && (
               <div className="mt-2 text-center">
-                <p className="text-sm text-gray-600">Connected Wallet Address:</p>
+                <p className="text-sm text-gray-600">
+                  Connected Wallet Address:
+                </p>
                 <p className="text-sm font-mono break-all">{wallet.address}</p>
               </div>
             )}
