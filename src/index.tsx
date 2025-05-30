@@ -12,7 +12,7 @@ import { Layout } from "./components/Layouts/Layout";
 import { ProtectedRoute } from "./screens/ProtectedRoute";
 
 const GOOGLE_CLIENT_ID =
-  "453868623338-t58gb2dgau19up6i4sb6aav0e6npqau3.apps.googleusercontent.com"; // ✅ your actual client ID
+  "453868623338-t58gb2dgau19up6i4sb6aav0e6npqau3.apps.googleusercontent.com";
 
 createRoot(document.getElementById("app") as HTMLElement).render(
   <StrictMode>
@@ -23,7 +23,7 @@ createRoot(document.getElementById("app") as HTMLElement).render(
             <Route path="/" element={<UserSignIn />} />
 
             <Route
-              path="/dashboard"
+              path="/user/dashboard"
               element={
                 <ProtectedRoute role="user">
                   <Layout>
@@ -34,7 +34,7 @@ createRoot(document.getElementById("app") as HTMLElement).render(
             />
 
             <Route
-              path="/dashboard"
+              path="/admin/dashboard"
               element={
                 <ProtectedRoute role="admin">
                   <Layout>
