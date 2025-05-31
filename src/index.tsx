@@ -12,7 +12,7 @@ import { Layout } from "./components/Layouts/Layout";
 import { ProtectedRoute } from "./screens/ProtectedRoute";
 
 const GOOGLE_CLIENT_ID =
-  "453868623338-t58gb2dgau19up6i4sb6aav0e6npqau3.apps.googleusercontent.com";
+  "453868623338-vee9rmbp45sc1gon5ld27h1rprq5ahlo.apps.googleusercontent.com";
 
 createRoot(document.getElementById("app") as HTMLElement).render(
   <StrictMode>

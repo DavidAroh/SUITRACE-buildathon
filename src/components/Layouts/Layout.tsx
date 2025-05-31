@@ -4,9 +4,8 @@ import Navbar from './Navbar';
 
 export const Layout = ({ children }: { children: ReactNode }) => {
   return (
-    <div className="min-h-screen bg-gray-100">
-      <Navbar />
-      <main className="p-4">{children}</main>
+    <div className="min-h-screen bg-gray-100 font-[Inter]">
+      <main >{children}</main>
     </div>
   );
 };
