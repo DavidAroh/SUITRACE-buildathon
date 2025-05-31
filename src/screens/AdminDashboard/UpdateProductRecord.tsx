@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FiBell } from 'react-icons/fi';
 import { FaQrcode, FaPlus } from 'react-icons/fa';
+import { useLocation } from 'react-router-dom';
 
 export const UpdateProductRecord: React.FC = () => {
+  const location = useLocation();
   const [trackingId, setTrackingId] = useState('FD1231222REDD');
-  const [productDetails] = useState({
+  const [productDetails, setProductDetails] = useState({
     name: 'hghddddddddddddddj',
     origin: 'abakaliki',
     batch: 'A6f123',
@@ -18,6 +20,19 @@ export const UpdateProductRecord: React.FC = () => {
     time: '12:30pm / 30-May-2025',
     contact: 'frankidowu2@gmail.com / 09042165622345',
   });
+
+  // Get state from navigation
+  useEffect(() => {
+    if (location.state) {
+      const state = location.state as any;
+      if (state.trackingId) {
+        setTrackingId(state.trackingId);
+      }
+      if (state.productDetails) {
+        setProductDetails(state.productDetails);
+      }
+    }
+  }, [location.state]);
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-50"> 

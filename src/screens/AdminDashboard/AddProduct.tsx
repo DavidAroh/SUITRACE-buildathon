@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FiBell, FiShare2, FiCopy, FiCheck } from "react-icons/fi";
 import QRCode from "react-qr-code";
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 // Mock contract service for presentation (no authentication required)
 const mockContractService = {
@@ -15,6 +15,9 @@ const mockContractService = {
   isAuthenticated: () => true
 };
 
+// Key for localStorage persistence
+const FORM_DATA_KEY = 'addProductFormData';
+
 export const AddProduct: React.FC = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -27,6 +30,24 @@ export const AddProduct: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
+
+  // Load saved form data from localStorage on component mount
+  useEffect(() => {
+    const savedFormData = localStorage.getItem(FORM_DATA_KEY);
+    if (savedFormData) {
+      try {
+        const parsedData = JSON.parse(savedFormData);
+        setFormData(parsedData);
+      } catch (e) {
+        console.error('Failed to parse saved form data', e);
+      }
+    }
+  }, []);
+
+  // Save form data to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem(FORM_DATA_KEY, JSON.stringify(formData));
+  }, [formData]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -54,6 +75,15 @@ export const AddProduct: React.FC = () => {
       );
       
       setTrackingId(txDigest);
+      
+      // Clear form data after successful submission
+      setFormData({
+        productName: "",
+        origin: "",
+        batchNumber: "",
+        harvestDate: ""
+      });
+      localStorage.removeItem(FORM_DATA_KEY);
     } catch (err: any) {
       console.error('Failed to create product batch:', err);
       setError("Demo error: Product creation failed");
@@ -67,12 +97,6 @@ export const AddProduct: React.FC = () => {
       navigator.clipboard.writeText(trackingId);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
-    }
-  };
-
-  const startTracking = () => {
-    if (trackingId) {
-      navigate(`/track/${trackingId}`);
     }
   };
 
@@ -160,6 +184,23 @@ export const AddProduct: React.FC = () => {
                 >
                   {isSubmitting ? 'Creating product...' : 'Save and generate tracking ID'}
                 </button>
+                
+                {/* Clear form button */}
+                <button
+                  type="button"
+                  onClick={() => {
+                    setFormData({
+                      productName: "",
+                      origin: "",
+                      batchNumber: "",
+                      harvestDate: ""
+                    });
+                    localStorage.removeItem(FORM_DATA_KEY);
+                  }}
+                  className="bg-gray-200 text-gray-700 text-sm px-4 py-2 mt-4 align-center hover:bg-gray-300"
+                >
+                  Clear Form
+                </button>
               </div>
             </form>
           </div>
@@ -234,13 +275,31 @@ export const AddProduct: React.FC = () => {
 
         {/* Footer Button */}
         {trackingId && (
-          <div className="mt-10 px-38 mb-6 flex justify-center">
-            <button 
-              onClick={startTracking}
-              className="bg-white border px-6 py-3 rounded-lg shadow text-center text-sm w-2/3 hover:bg-gray-50"
+          <div className="mt-10 px-4 mb-6 flex justify-center">
+            <Link 
+              to="/admin/updateproduct" 
+              state={{ 
+                trackingId,
+                productDetails: {
+                  name: formData.productName || "Not specified",
+                  origin: formData.origin || "Not specified",
+                  batch: formData.batchNumber || "Not specified",
+                  harvest: formData.harvestDate ? 
+                    new Date(formData.harvestDate).toLocaleDateString('en-US', {
+                      day: 'numeric',
+                      month: 'short',
+                      year: 'numeric',
+                      hour: '2-digit',
+                      minute: '2-digit'
+                    }) : 'Not specified'
+                }
+              }}
+              className="w-full sm:w-96"
             >
-              Start Product Tracking
-            </button>
+              <button className="bg-white border px-6 py-3 rounded-lg shadow text-center text-sm w-full sm:w-2/3">
+                Start Product Tracking
+              </button>
+            </Link>
           </div>
         )}
       </main>
