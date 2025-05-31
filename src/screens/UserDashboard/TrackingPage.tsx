@@ -2,14 +2,14 @@ import React from 'react';
 
 export const TrackingPage: React.FC = () => {
   return (
-    <div className="min-h-screen bg-white font-sans">
+    <div className="min-h-screen bg-white font-sans px-4 py-6">
       {/* Search */}
       <div className="flex justify-center">
-        <div className=" flex items-center px-4 py-2 rounded-full w-[400px] shadow-md mt-8 bg-[#F7F7F7]">
+        <div className="flex items-center px-4 py-2 rounded-full w-full max-w-md shadow-md mt-4 bg-[#F7F7F7]">
           <input
             type="text"
             placeholder="asdr123233hjtt"
-            className="bg-transparent flex-grow outline-none px-2"
+            className="bg-transparent flex-grow outline-none px-2 text-sm"
           />
           <button>
             <img
@@ -22,17 +22,18 @@ export const TrackingPage: React.FC = () => {
       </div>
 
       {/* Content */}
-      <div className="flex justify-center items-start gap-8 px-6 py-12">
+      <div className="flex flex-col md:flex-row justify-center items-start gap-6 md:gap-8 mt-10">
         {/* Product Card */}
-        <div className="bg-gradient-to-br from-blue-900 to-blue-700 text-white p-6 rounded-xl w-[400px] shadow-lg">
-          <p className="mb-2"><strong>Product Name:</strong> Fermented Sugar Solution</p>
-          <p className="mb-2"><strong>Product Id:</strong> ASDR123233HJTT</p>
-          <p className="mb-2"><strong>Product Description:</strong><br />
+        <div className="bg-gradient-to-br from-blue-900 to-blue-700 text-white p-6 rounded-xl w-full md:w-[400px] shadow-lg">
+          <p className="mb-2 text-sm md:text-base"><strong>Product Name:</strong> Fermented Sugar Solution</p>
+          <p className="mb-2 text-sm md:text-base"><strong>Product Id:</strong> ASDR123233HJTT</p>
+          <p className="mb-2 text-sm md:text-base">
+            <strong>Product Description:</strong><br />
             <span className="text-sm">
               Fermented sugar solution is a liquid product resulting from the breakdown of sugars by yeast or bacteria, producing compounds like ethanol, acids, or carbon dioxide. It’s used in various applications, including food, beverages, and industrial processes.
             </span>
           </p>
-          <p className="mb-2"><strong>Product Specifications:</strong></p>
+          <p className="mb-2 text-sm md:text-base"><strong>Product Specifications:</strong></p>
           <ul className="text-sm ml-4 list-disc space-y-1">
             <li><strong>Composition:</strong> Sugar, water, yeast or bacteria (depending on the fermentation type)</li>
             <li><strong>Fermentation Type:</strong> Can be alcoholic (yeast-based) or lactic acid (bacteria-based)</li>
@@ -41,14 +42,14 @@ export const TrackingPage: React.FC = () => {
         </div>
 
         {/* Tracking Card */}
-        <div className="bg-blue-900 text-white p-6 rounded-xl w-[300px] shadow-lg flex flex-col items-center">
+        <div className="bg-blue-900 text-white p-6 rounded-xl w-full md:w-[300px] shadow-lg flex flex-col items-center">
           <div className="flex flex-col items-start space-y-10">
             <TrackingStep label="Factory/Store" active />
             <TrackingStep label="Distributor" />
             <TrackingStep label="Shipped" />
             <TrackingStep label="on it's way to your doorstep" />
           </div>
-          <button className="mt-10 bg-white text-blue-900 font-semibold px-6 py-2 rounded-full hover:bg-gray-100">
+          <button className="mt-10 bg-white text-blue-900 font-semibold px-6 py-2 rounded-full hover:bg-gray-100 text-sm md:text-base text-center w-full">
             View delivery via Google Maps
           </button>
         </div>
