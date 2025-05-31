@@ -1,14 +1,13 @@
-// src/components/Layout/Layout.tsx
 import { ReactNode } from 'react';
 import Navbar from './Navbar';
 
-export const Layout = ({ children }: { children: ReactNode }) => {
+export const UserLayout = ({ children }: { children: ReactNode }) => {
   return (
     <div className="min-h-screen bg-gray-100 font-[Inter]">
       <Navbar />
-      <main >{children}</main>
+      <main className='overflow-auto'>{children}</main>
     </div>
   );
 };
 
-export default Layout;
+export default UserLayout;

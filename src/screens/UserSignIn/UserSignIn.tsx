@@ -10,10 +10,21 @@ export const UserSignIn = (): JSX.Element => {
   const { connected, connecting, select, disconnect, wallet } = useWallet();
   const [zkLoginAddress, setZkLoginAddress] = useState<string | null>(null);
   const [role, setRole] = useState<"user" | "admin">("user");
-  const adminWallets = ['0xAdminWalletAddress1', '0xAdminWalletAddress2'];
   const navigate = useNavigate();
 
-  const adminEmails = ["admin@example.com", "superadmin@domain.com"];
+  const [adminEmails, setAdminEmails] = useState<string[]>([]);
+  const [adminWallets, setAdminWallets] = useState<string[]>([]);
+
+  useEffect(() => {
+    const fetchAdmins = async () => {
+      const res = await fetch("/api/admins");
+      const data = await res.json();
+      setAdminEmails(data.emails || []);
+      setAdminWallets(data.wallets || []);
+    };
+    fetchAdmins();
+  }, []);
+
 
   const toggleRole = () => {
     setRole((prev) => (prev === "user" ? "admin" : "user"));
@@ -25,7 +36,7 @@ export const UserSignIn = (): JSX.Element => {
       try {
         const accessToken = response.access_token;
 
-        const res = await fetch(`https://www.googleapis.com/oauth2/v3/userinfo`, {
+        const res = await fetch("https://www.googleapis.com/oauth2/v3/userinfo", {
           headers: { Authorization: `Bearer ${accessToken}` },
         });
 
@@ -39,12 +50,10 @@ export const UserSignIn = (): JSX.Element => {
           if (idToken) {
             const decoded: any = jwtDecode(idToken);
 
-            // Required values for zkLogin address generation
             const issuer = "https://accounts.google.com";
             const audience = decoded.aud;
             const subject = decoded.sub;
 
-            // Optional but useful: Generate ephemeral randomness
             const nonce = generateRandomness();
 
             zkLoginAddr = jwtToAddress({
@@ -60,9 +69,16 @@ export const UserSignIn = (): JSX.Element => {
           console.warn("Failed to decode JWT or generate zkLogin address:", err);
         }
 
-        const isAdmin = adminEmails.includes(userInfo.email);
-        const userRole = isAdmin ? "admin" : "user";
-        setRole(userRole);
+        // Optional: Validate if user is allowed as admin
+        // Allow anyone to sign in as admin temporarily
+        if (role === "admin" && !adminEmails.includes(userInfo.email)) {
+          console.warn("New admin signing in:", userInfo.email);
+          // Optionally: Add email to adminEmails dynamically
+          setAdminEmails((prev) => [...prev, userInfo.email]);
+        }
+
+
+        const userRole = role; // Use toggled role
 
         localStorage.setItem(
           "user",
@@ -98,7 +114,16 @@ export const UserSignIn = (): JSX.Element => {
       const stored = localStorage.getItem("user");
 
       if (!stored) {
-        const userRole = adminWallets.includes(wallet.address) ? 'admin' : 'user';
+        // Allow new wallet-based admin temporarily
+        if (role === "admin" && !adminWallets.includes(wallet.address)) {
+          console.warn("New admin wallet signing in:", wallet.address);
+          // Optionally: Add to adminWallets dynamically
+          setAdminWallets((prev) => [...prev, wallet.address]);
+        }
+
+
+        const userRole = role;
+
         const userData = {
           role: userRole,
           address: wallet.address,

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 interface Order {
   name: string;
@@ -47,35 +48,7 @@ export const UserDashboard: React.FC = () => {
   }, [navigate]);
 
   return (
-    <div className="min-h-screen w-full bg-white flex flex-col">
-      {/* NAVBAR */}
-      <nav className="bg-[#585858] text-white p-6 flex justify-center place-items-center">
-        <div className="flex flex-row sm:flex-row sm:items-center sm:space-x-6 text-sm items-center relative w-full max-w-6xl">
-          {/* Navigation Links */}
-          <div className="flex space-x-6 justify-center text-sm sm:text-base relative left-80">
-            <a href="#" className="hover:border-[#4D9FE0]">Dashboard</a>
-            <a
-              href="#"
-              className="px-4 py-1 border border-[#4D9FE0] rounded-full text-white relative bottom-1"
-            >
-              Shipments
-            </a>
-            <a href="#" className="border-none border-[#4D9FE0] rounded-full hover:border-[#4D9FE0]">Tracking</a>
-            <a href="#" className="hover:border-[#4D9FE0]">Contact Us</a>
-          </div>
-
-          {/* Wallet Address */}
-          <div className="bg-[#4D9FE0] px-4 py-2 rounded-full text-xs font-mono ml-10 absolute right-1 bottom-1">
-            {user?.address
-              ? user.address.slice(0, 6) + "..." + user.address.slice(-4)
-              : "No wallet"}
-          </div>
-        </div>
-      </nav>
-
-
-
-      {/* MAIN CONTENT */}
+    <div className="min-h-screen w-full bg-white flex flex-col overflow-auto">
       <div className="flex-grow px-4 md:px-16 py-8 w-full">
         <h1 className="font-bold mb-6 text-3xl">My Orders</h1>
 
@@ -98,9 +71,11 @@ export const UserDashboard: React.FC = () => {
                   <td className="p-4">{order.destination}</td>
                   <td className="p-4">{order.time}</td>
                   <td className="p-4">
-                    <div className="w-8 h-8 border rounded-md flex items-center justify-center cursor-pointer hover:bg-gray-200">
-                      🔍
-                    </div>
+                    <Link to="/user/tracking">
+                      <div className="w-8 h-8 border rounded-md flex items-center justify-center cursor-pointer hover:bg-gray-200">
+                        🔍
+                      </div>
+                    </Link>
                   </td>
                 </tr>
               ))}
