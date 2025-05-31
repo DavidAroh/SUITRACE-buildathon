@@ -20,66 +20,66 @@ export const UpdateProductRecord: React.FC = () => {
   });
 
   return (
-    <div className="flex min-h-screen"> 
-      {/* Main Content */}
-      <main className="flex-1 bg-gray-50">
-        <header className="flex justify-between items-center px-6 py-4 bg-white">
-          <h1 className="text-xl font-semibold">Update Product Record</h1>
-          <div className="flex items-center gap-4">
-            <FiBell size={20} />
-            <button className="border px-4 py-2 rounded">Export Product Record</button>
-          </div>
-        </header>
+    <div className="flex flex-col min-h-screen bg-gray-50"> 
+      {/* Header */}
+      <header className="flex flex-col sm:flex-row justify-between items-start sm:items-center px-4 py-4 bg-white gap-2 sm:gap-0">
+        <h1 className="text-lg sm:text-xl font-semibold">Update Product Record</h1>
+        <div className="flex items-center gap-3">
+          <FiBell size={20} />
+          <button className="border px-3 py-1 rounded text-sm">Export Product Record</button>
+        </div>
+      </header>
 
-        {/* Tracking ID Input */}
-        <div className="px-6 py-4 flex items-center gap-4">
-          <label className="font-semibold text-sm">Input Tracking Id</label>
+      {/* Tracking ID Input */}
+      <div className="px-4 py-4 flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4">
+        <label className="font-semibold text-sm">Input Tracking Id</label>
+        <div className="flex items-center gap-2 w-full sm:w-auto">
           <input
             value={trackingId}
             onChange={(e) => setTrackingId(e.target.value)}
-            className="border rounded px-3 py-1 text-sm w-60"
+            className="border rounded px-3 py-2 text-sm w-full sm:w-60"
           />
           <FaQrcode className="text-gray-700" />
         </div>
+      </div>
 
-        {/* Product Details */}
-        <div className="px-6">
-          <div className="bg-white p-6 rounded shadow w-full max-w-xl">
-            <h2 className="font-bold mb-4">Product Details</h2>
-            <div className="mb-3">
-              <label className="block text-sm font-medium">Product Name</label>
-              <input className="w-full border p-2 rounded" value={productDetails.name} readOnly />
+      {/* Product Details */}
+      <div className="px-4">
+        <div className="bg-white p-4 sm:p-6 rounded shadow w-full max-w-2xl mx-auto">
+          <h2 className="font-bold mb-4 text-lg">Product Details</h2>
+          <div className="mb-3">
+            <label className="block text-sm font-medium">Product Name</label>
+            <input className="w-full border p-2 rounded" value={productDetails.name} readOnly />
+          </div>
+          <div className="mb-3">
+            <label className="block text-sm font-medium">Product Origin</label>
+            <input className="w-full border p-2 rounded" value={productDetails.origin} readOnly />
+          </div>
+          <div className="mb-3">
+            <label className="block text-sm font-medium">Batch Number</label>
+            <input className="w-full border p-2 rounded" value={productDetails.batch} readOnly />
+          </div>
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2">
+            <div className="flex-1 w-full">
+              <label className="block text-sm font-medium">Harvest Date</label>
+              <input className="w-full border p-2 rounded" value={productDetails.harvest} readOnly />
             </div>
-            <div className="mb-3">
-              <label className="block text-sm font-medium">Product Origin</label>
-              <input className="w-full border p-2 rounded" value={productDetails.origin} readOnly />
-            </div>
-            <div className="mb-3">
-              <label className="block text-sm font-medium">Batch Number</label>
-              <input className="w-full border p-2 rounded" value={productDetails.batch} readOnly />
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="flex-1">
-                <label className="block text-sm font-medium">Harvest Date</label>
-                <input className="w-full border p-2 rounded" value={productDetails.harvest} readOnly />
-              </div>
-              <FaPlus className="mt-6 text-gray-700" />
-            </div>
+            <FaPlus className="text-gray-700 mt-2 sm:mt-6" />
           </div>
         </div>
+      </div>
 
-        {/* Author Details */}
-        <div className="px-6 py-4">
-          <div className="bg-white p-6 rounded shadow w-full max-w-xl">
-            <h2 className="font-bold mb-4">Author Details</h2>
-            <p><strong>Name:</strong> {authorDetails.name}</p>
-            <p><strong>Role:</strong> {authorDetails.role}</p>
-            <p><strong>Description:</strong> {authorDetails.description}</p>
-            <p><strong>Time/Date:</strong> {authorDetails.time}</p>
-            <p><strong>Email/Tel no:</strong> {authorDetails.contact}</p>
-          </div>
+      {/* Author Details */}
+      <div className="px-4 py-4">
+        <div className="bg-white p-4 sm:p-6 rounded shadow w-full max-w-2xl mx-auto">
+          <h2 className="font-bold mb-4 text-lg">Author Details</h2>
+          <p><strong>Name:</strong> {authorDetails.name}</p>
+          <p><strong>Role:</strong> {authorDetails.role}</p>
+          <p><strong>Description:</strong> {authorDetails.description}</p>
+          <p><strong>Time/Date:</strong> {authorDetails.time}</p>
+          <p><strong>Email/Tel no:</strong> {authorDetails.contact}</p>
         </div>
-      </main>
+      </div>
     </div>
   );
 };

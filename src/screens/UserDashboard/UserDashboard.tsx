@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Link } from 'react-router-dom';
+import { useNavigate, Link } from "react-router-dom";
 
 interface Order {
   name: string;
@@ -49,28 +48,29 @@ export const UserDashboard: React.FC = () => {
 
   return (
     <div className="min-h-screen w-full bg-white flex flex-col overflow-auto">
-      <div className="flex-grow px-4 md:px-16 py-8 w-full">
-        <h1 className="font-bold mb-6 text-3xl">My Orders</h1>
+      <div className="flex-grow px-4 sm:px-6 md:px-12 py-8 w-full">
+        <h1 className="font-bold mb-6 text-2xl sm:text-3xl">My Orders</h1>
 
+        {/* Responsive Table */}
         <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse">
+          <table className="min-w-full text-left border-collapse text-sm sm:text-base">
             <thead>
-              <tr className="text-sm">
-                <th className="p-4">Product Name</th>
-                <th className="p-4">ID number</th>
-                <th className="p-4">Destination Address</th>
-                <th className="p-4">Timestamp</th>
-                <th className="p-4">Action</th>
+              <tr className="bg-gray-100 text-gray-700">
+                <th className="p-3 sm:p-4">Product Name</th>
+                <th className="p-3 sm:p-4">ID Number</th>
+                <th className="p-3 sm:p-4">Destination Address</th>
+                <th className="p-3 sm:p-4">Timestamp</th>
+                <th className="p-3 sm:p-4">Action</th>
               </tr>
             </thead>
             <tbody>
               {orders.map((order, i) => (
-                <tr key={i} className={`text-base font-lg mt-5 ${i % 2 === 0 ? "bg-[#D9D9D9]" : "bg-[#F7F7F7]"}`}>
-                  <td className="p-4">{order.name}</td>
-                  <td className="p-4">{order.id}</td>
-                  <td className="p-4">{order.destination}</td>
-                  <td className="p-4">{order.time}</td>
-                  <td className="p-4">
+                <tr key={i} className={`font-medium ${i % 2 === 0 ? "bg-[#D9D9D9]" : "bg-[#F7F7F7]"}`}>
+                  <td className="p-3 sm:p-4">{order.name}</td>
+                  <td className="p-3 sm:p-4">{order.id}</td>
+                  <td className="p-3 sm:p-4">{order.destination}</td>
+                  <td className="p-3 sm:p-4">{order.time}</td>
+                  <td className="p-3 sm:p-4">
                     <Link to="/user/tracking">
                       <div className="w-8 h-8 border rounded-md flex items-center justify-center cursor-pointer hover:bg-gray-200">
                         🔍
@@ -83,9 +83,9 @@ export const UserDashboard: React.FC = () => {
           </table>
         </div>
 
-        {/* PAGINATION */}
+        {/* Pagination */}
         <div className="flex flex-col sm:flex-row justify-between items-center mt-8 gap-4">
-          <button className="bg-gray-200 px-6 py-2 rounded text-sm">prev</button>
+          <button className="bg-gray-200 px-5 py-2 rounded text-sm hover:bg-gray-300 transition">Prev</button>
 
           <div className="flex space-x-2">
             <span className="w-3 h-3 bg-gray-700 rounded-full"></span>
@@ -93,7 +93,7 @@ export const UserDashboard: React.FC = () => {
             <span className="w-3 h-3 bg-gray-400 rounded-full"></span>
           </div>
 
-          <button className="bg-gray-200 px-6 py-2 rounded text-sm">next</button>
+          <button className="bg-gray-200 px-5 py-2 rounded text-sm hover:bg-gray-300 transition">Next</button>
         </div>
       </div>
     </div>
