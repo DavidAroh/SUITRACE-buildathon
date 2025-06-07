@@ -149,7 +149,7 @@ export const UserSignIn = (): JSX.Element => {
         <img
           className="h-full w-full object-cover transition-all duration-300"
           alt="Map location illustration"
-          src={role === "admin" ? "/image.jpg" : "/image.png"}
+          src={role === "admin" ? "/image.png" : "/image.png"}
         />
       </div>
 
@@ -188,7 +188,7 @@ export const UserSignIn = (): JSX.Element => {
 
             {/* Wallet Button */}
             <Button
-              className="flex items-center justify-center gap-4 py-4 px-6 h-auto rounded-[20px] bg-[#4d9fe0] text-base md:text-xl"
+              className="flex items-center justify-center gap-4 py-4 px-6 h-auto rounded-[20px] bg-[#00C707] text-base md:text-xl"
               onClick={handleWalletClick}
               disabled={connecting}
             >

@@ -17,15 +17,13 @@ export const AddProduct: React.FC = () => {
         </div>
 
         {/* Form & QR Section */}
-        <div className="flex flex-col lg:flex-row gap-6 p-4 sm:p-6">
+        <div className="flex flex-row lg:flex-row gap-6 p-4 sm:p-6">
           {/* Form */}
           <div className="w-full lg:flex-1 bg-white shadow rounded-lg p-4 sm:p-6">
             <form className="space-y-4">
               <div>
                 <label className="block text-sm mb-1 font-medium">Product Name</label>
-                <select className="w-full border rounded px-3 py-2 text-sm">
-                  <option>Select product</option>
-                </select>
+                <input className="w-full border rounded px-3 py-2 text-sm" type="text" />
               </div>
               <div>
                 <label className="block text-sm mb-1 font-medium">Product Origin</label>

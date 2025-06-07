@@ -1,9 +1,26 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { FaBoxes, FaMapMarkerAlt, FaHeadset, FaBox, FaEnvelope, FaThLarge, FaBars, FaTimes } from "react-icons/fa";
+import React, { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import {
+  FaBox,
+  FaMapMarkerAlt,
+  FaEnvelope,
+  FaThLarge,
+  FaBars,
+  FaTimes,
+} from "react-icons/fa";
+
+const navItems = [
+  { label: "Dashboard", icon: <FaThLarge />, path: "/admin/dashboard" },
+  { label: "Shipments", icon: <FaBox />, path: "/admin/shipments" },
+  { label: "Tracking", icon: <FaMapMarkerAlt />, path: "/admin/tracking" },
+  { label: "Contact Us", icon: <FaEnvelope />, path: "/admin/contact" },
+];
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const location = useLocation();
+
+  const isActive = (path: string) => location.pathname === path;
 
   return (
     <>
@@ -17,36 +34,38 @@ const Sidebar = () => {
 
       {/* Sidebar */}
       <aside
-        className={`h-lg bg-[#373737] text-white flex flex-col z-40 w-64 transform transition-transform duration-300 ease-in-out
-          ${isOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0 md:static md:flex`}
+        className={`fixed md:static top-0 left-0 w-64 bg-[#373737] text-white z-40 
+        transform transition-transform duration-300 
+        h-screen md:h-screen overflow-y-auto
+        ${isOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0`}
       >
-        <nav className="flex-1 py-4">
-          <ul className="space-y-3 mt-16 md:mt-11">
-            <Link to="/admin/dashboard">
-              <li className="px-8 py-3 hover:bg-gray-700 flex items-center">
-                <FaThLarge className="mr-3" /> Dashboard
+        <nav className="flex flex-col justify-between h-full py-6">
+          <ul className="space-y-3 mt-12">
+            {navItems.map((item, index) => (
+              <li key={index}>
+                <Link
+                  to={item.path}
+                  className={`flex items-center px-8 py-3 transition-colors ${
+                    isActive(item.path)
+                      ? "bg-green-500 font-semibold"
+                      : "hover:bg-gray-700"
+                  }`}
+                >
+                  <span className="mr-3">{item.icon}</span>
+                  {item.label}
+                </Link>
               </li>
-            </Link>
-
-            <li className="px-8 py-4 bg-green-500 text-white flex items-center font-semibold">
-              <FaBox className="mr-3" /> Shipments
-            </li>
-            <li className="px-8 py-3 hover:bg-gray-700 flex items-center">
-              <FaMapMarkerAlt className="mr-3" /> Tracking
-            </li>
-            <li className="px-8 py-3 hover:bg-gray-700 flex items-center">
-              <FaEnvelope className="mr-3" /> Contact Us
-            </li>
+            ))}
           </ul>
-        </nav>
 
-        {/* Wallet Info */}
-        <div className="bg-[#4D9FE0] m-8 px-3 py-3 rounded-full text-xs font-mono text-center">
-          0X8cck.....fff
-        </div>
+          {/* Wallet Info */}
+          <div className="bg-[#4D9FE0] mx-8 mb-4 px-3 py-2 rounded-full text-xs font-mono text-center">
+            0x8cck...fff
+          </div>
+        </nav>
       </aside>
 
-      {/* Overlay for closing sidebar on mobile */}
+      {/* Mobile Overlay */}
       {isOpen && (
         <div
           className="fixed inset-0 bg-black opacity-30 z-30 md:hidden"
