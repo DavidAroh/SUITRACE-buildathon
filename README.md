@@ -4,6 +4,7 @@
 
 **SuiTrace** is a blockchain-based platform designed to bring **transparency**, **traceability**, and **trust** to Nigeria’s agricultural supply chain. Built on the high-performance **Sui blockchain**, SuiTrace enables stakeholders to register, track, and verify product movement from **farm to shelf** — using smart contracts, zkLogin, and digital product passports.
 
+**SMART CONTRACT** : [`THE SMART CONTRACT`](https://www.github.com/zaratti/sui_trace)
 ---
 
 ## 🚀 Features
@@ -62,7 +63,6 @@
 
 - **`AccessControl.move`**  
   Manage role-based permissions: Farmer, Retailer, Admin.
-
 ---
 
 ## 📌 Contribution
