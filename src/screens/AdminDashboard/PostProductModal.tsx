@@ -31,36 +31,36 @@ const PostProductModal: React.FC<PostProductModalProps> = ({ isOpen, onClose }) 
         <input
           type="text"
           placeholder="Product Name"
-          className="w-full mb-3 px-3 py-2 rounded border border-gray-300 text-sm focus:outline-none"
+          className="w-full mb-3 px-3 py-2 rounded border border-gray-300 text-sm text-black bg-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-300"
         />
 
         {/* Product Description */}
         <textarea
           placeholder="Product Description"
           rows={3}
-          className="w-full mb-3 px-3 py-2 rounded border border-gray-300 text-sm resize-none focus:outline-none"
+          className="w-full mb-3 px-3 py-2 rounded border border-gray-300 text-sm text-black bg-white placeholder-gray-500 resize-none focus:outline-none focus:ring-2 focus:ring-gray-300"
         />
 
         {/* Quantity and Price Row */}
         <div className="flex items-center gap-2 mb-4">
           <span className="text-sm font-medium text-black">Qty:</span>
-          <button onClick={handleDecrement} className="bg-white border px-1 py-1 rounded text-black">
+          <button onClick={handleDecrement} className="bg-white border px-2 py-1 rounded text-black">
             <FiMinus size={14} />
           </button>
           <input
             type="number"
             value={quantity}
             readOnly
-            className="w-8 text-center bg-white border py-1 rounded text-black text-sm"
+            className="w-10 border px-2 py-1 rounded text-black text-sm"
           />
-          <button onClick={handleIncrement} className="bg-white border px-1 py-1 rounded text-black">
+          <button onClick={handleIncrement} className="bg-white border px-2 py-1 rounded text-black">
             <FiPlus size={14} />
           </button>
 
           <input
             type="text"
             placeholder="Price"
-            className="flex-1 ml-2 px-3 py-2 rounded border border-gray-300 text-sm focus:outline-none"
+            className="flex-1 px-0 py-2 rounded border border-gray-300 text-sm text-black bg-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-300"
           />
         </div>
 
