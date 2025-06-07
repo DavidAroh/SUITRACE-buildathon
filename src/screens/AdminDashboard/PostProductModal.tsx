@@ -51,7 +51,7 @@ const PostProductModal: React.FC<PostProductModalProps> = ({ isOpen, onClose }) 
             type="number"
             value={quantity}
             readOnly
-            className="w-9 text-center bg-white border  py-1 rounded text-black text-sm"
+            className="w-8 text-center bg-white border py-1 rounded text-black text-sm"
           />
           <button onClick={handleIncrement} className="bg-white border px-1 py-1 rounded text-black">
             <FiPlus size={14} />
