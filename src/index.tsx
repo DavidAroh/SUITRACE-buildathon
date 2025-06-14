@@ -10,6 +10,7 @@ import { TrackingPage } from "./screens/UserDashboard/TrackingPage";
 import { AdminDashboard } from "./screens/AdminDashboard/AdminDashboard";
 import { AddProduct } from "./screens/AdminDashboard/AddProduct";
 import { UpdateProductRecord } from "./screens/AdminDashboard/UpdateProductRecord";
+import { Homepage } from "./screens/landing-page";
 import { UserLayout } from "./components/Layouts/UserLayout";
 import { AdminLayout } from "./components/Layouts/AdminLayout";
 import { ProtectedRoute } from "./screens/ProtectedRoute";
@@ -24,7 +25,8 @@ createRoot(document.getElementById("app") as HTMLElement).render(
         <BrowserRouter>
           <Routes>
             {/* Public Route */}
-            <Route path="/" element={<UserSignIn />} />
+            <Route path="/" element={<Homepage />} />
+            <Route path="/sign-in" element={<UserSignIn />} />
 
             {/* Protected User Route with Navbar */}
             <Route
