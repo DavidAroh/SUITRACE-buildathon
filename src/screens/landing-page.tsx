@@ -1,67 +1,34 @@
 import React from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { Shield, MapPin, Clock, Award } from 'lucide-react';
+import { Shield, MapPin, Clock, Award, TrendingUp, Users, Package } from 'lucide-react';
 import { Button } from "../components/ui/button";
-
+import { Productpage } from "./ProductGrid";
 export const Homepage = () => {
-    const features = [
-        "Verified Farms",
-        "Trusted Sellers",
-        "Product Reviews",
-        "Traceable Origin",
-        "Real-time Updates",
-    ];
-
-    const products = [
+    const stats = [
         {
-            name: "Organic Strawberries",
-            price: "$5.99",
-            location: "Lagos",
-            rating: 4.5,
-            image: "https://images.unsplash.com/photo-1567306226416-28f0efdc88ce",
+            icon: Package,
+            value: '2,847',
+            label: 'Products Traced',
+            color: 'text-green-600'
         },
         {
-            name: "Fresh Okra",
-            price: "$2.99",
-            location: "Abuja",
-            rating: 4.2,
-            image: "https://images.unsplash.com/photo-1635821782454-5b509cd7635b",
+            icon: Users,
+            value: '1,234',
+            label: 'Active Farmers',
+            color: 'text-orange-600'
         },
         {
-            name: "Sweet Potatoes",
-            price: "$4.50",
-            location: "Enugu",
-            rating: 4.8,
-            image: "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2",
+            icon: TrendingUp,
+            value: '$89K',
+            label: 'Monthly Volume',
+            color: 'text-blue-600'
         },
         {
-            name: "Fresh Ginger",
-            price: "$3.99",
-            location: "Jos",
-            rating: 4.6,
-            image: "https://images.unsplash.com/photo-1615485293361-7e8e17631ce1",
-        },
-        {
-            name: "Yam Tuber",
-            price: "$7.99",
-            location: "Benue",
-            rating: 4.3,
-            image: "https://img.freepik.com/free-photo/yam-root_1339-6581.jpg",
-        },
-        {
-            name: "Tiger Nuts",
-            price: "$2.50",
-            location: "Kaduna",
-            rating: 4.1,
-            image: "https://img.freepik.com/free-photo/healthy-organic-tigernuts-closeup_23-2149183703.jpg",
-        },
-        {
-            name: "Mushrooms",
-            price: "$6.00",
-            location: "Ibadan",
-            rating: 4.7,
-            image: "https://images.unsplash.com/photo-1615484477781-6fa7b38b8c88",
-        },
+            icon: MapPin,
+            value: '12',
+            label: 'Countries',
+            color: 'text-purple-600'
+        }
     ];
 
     const categories = [
@@ -130,12 +97,14 @@ export const Homepage = () => {
                         </p>
 
                         <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-                            <Button
+                            <Link to={"/sign-in"}>
+                             <Button
                                 size="lg"
                                 className="bg-white text-green-600 hover:bg-green-50 px-8 py-3 text-lg font-semibold"
                             >
-                                Start Trading
+                                Start Selling
                             </Button>
+                            </Link>
                             <Button
                                 variant="outline"
                                 size="lg"
@@ -169,59 +138,62 @@ export const Homepage = () => {
             </div>
 
             {/* Features */}
-            <section className="bg-white py-8">
-                <div className="max-w-6xl mx-auto grid grid-cols-2 sm:grid-cols-5 gap-4 text-center">
-                    {features.map((feature, idx) => (
-                        <div key={idx}>
-                            <div className="text-green-600 text-2xl">✔</div>
-                            <p className="text-sm font-medium mt-1">{feature}</p>
-                        </div>
-                    ))}
+            <div className="bg-white py-16">
+                <div className="container mx-auto px-4">
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+                        {stats.map((stat, index) => (
+                            <div key={index} className="text-center">
+                                <div className={`inline-flex items-center justify-center w-12 h-12 rounded-full bg-gray-100 mb-4 ${stat.color}`}>
+                                    <stat.icon className="w-6 h-6" />
+                                </div>
+                                <div className="text-3xl font-bold text-gray-900 mb-1">{stat.value}</div>
+                                <div className="text-gray-600">{stat.label}</div>
+                            </div>
+                        ))}
+                    </div>
                 </div>
-            </section>
+            </div>
 
             {/* Featured Products */}
             <section className="py-10 px-4">
                 <h3 className="text-2xl font-semibold text-center mb-6">Featured Products</h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
-                    {products.map((item, idx) => (
-                        <div key={idx} className="bg-white border rounded shadow">
-                            <img src={item.image} alt={item.name} className="h-40 w-full object-cover rounded-t" />
-                            <div className="p-4">
-                                <h4 className="font-bold text-lg">{item.name}</h4>
-                                <p className="text-sm text-gray-600">{item.location}</p>
-                                <div className="flex justify-between items-center mt-2">
-                                    <span className="text-green-600 font-semibold">{item.price}</span>
-                                    <span className="text-yellow-500 text-sm">★ {item.rating}</span>
+                <Productpage />
+            </section>
+
+            {/* Categories */}
+            <section className="py-10 px-4 bg-white">
+                <h3 className="text-2xl font-semibold text-center mb-6">Categories</h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+                    {categories.map((cat, idx) => (
+                        <div key={idx} className="relative rounded-xl overflow-hidden shadow-md h-48">
+                            <img
+                                src={cat.image}
+                                alt={cat.name}
+                                className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                            />
+                            {/* Full Overlay */}
+                            <div className="absolute inset-0  flex items-center justify-center">
+                                {/* Glassmorphic Text Container */}
+                                <div className="bg-black/50 backdrop-blur-2xl rounded-full px-6 py-2">
+                                    <p className="text-white text-lg font-semibold">{cat.name} Products</p>
                                 </div>
-                                <button className="mt-4 bg-green-500 text-white w-full py-2 rounded hover:bg-green-600">
-                                    View
-                                </button>
                             </div>
                         </div>
                     ))}
                 </div>
             </section>
 
-            {/* Categories */}
-            <section className="py-10 px-4 bg-white">
-                <h3 className="text-2xl font-semibold text-center mb-6">Categories</h3>
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4 max-w-6xl mx-auto">
-                    {categories.map((cat, idx) => (
-                        <div key={idx} className="text-center">
-                            <img src={cat.image} alt={cat.name} className="h-24 w-full object-cover rounded-md" />
-                            <p className="mt-2 text-sm font-medium">{cat.name}</p>
-                        </div>
-                    ))}
-                </div>
-            </section>
+
+
+
 
             {/* Footer */}
             <footer className="bg-[#fdfcf7] border-t mt-10 py-10 px-4">
                 <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
                     <div>
                         <h4 className="text-xl font-bold text-green-600">SuiTrace</h4>
-                        <p className="text-sm mt-2">From Farm to Table</p>
+                        <p className="text-sm mt-2">Revolutionary blockchain marketplace connecting African farmers directly to buyers with
+                            complete supply chain transparency and smart contract security.</p>
                     </div>
                     <div>
                         <h5 className="font-semibold mb-2">Contact Us</h5>
